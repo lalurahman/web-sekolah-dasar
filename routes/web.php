@@ -76,6 +76,7 @@ Route::group(['prefix' => 'staff', 'middleware' => ['auth', 'islogin:staff']], f
 Route::group(['prefix' => 'siswa', 'middleware' => ['auth', 'islogin:siswa']], function(){
     Route::get('/', [StudentController::class, 'index'])->name('dashboard-siswa');
     Route::get('/tugas', [StudentController::class, 'tugas'])->name('siswa-data-tugas');
+    Route::get('/tugas/detail-tugas', [StudentController::class, 'detail_tugas'])->name('siswa-detail-tugas');
 
 });
 

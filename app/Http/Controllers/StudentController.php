@@ -117,4 +117,9 @@ class StudentController extends Controller
     {
         return view('pages.siswa.tugas');
     }
+
+    public function detail_tugas()
+    {
+        return view('pages.siswa.detail-tugas');
+    }
 }

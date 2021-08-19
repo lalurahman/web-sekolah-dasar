@@ -31,7 +31,7 @@
               </div>
               <div class="row">
                 <div class="col-12 text-center">
-                  <a href="#" class="btn btn-block btn-sm btn-primary">
+                  <a href="{{ route('siswa-detail-tugas') }}" class="btn btn-block btn-sm btn-primary">
                     <i class="fas fa-edit"></i>
                     <span class="text ml-1">Kerjakan Tugas</span>
                   </a>
