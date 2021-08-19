@@ -52,8 +52,7 @@
                 </div>
                 <div class="col-12 col-md-2">
                     <h6>Nilai : -</h6>
-                </div>
-                
+                </div>    
             </div>
             <div class="row">
                 <div class="col-12">
