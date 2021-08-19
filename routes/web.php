@@ -64,6 +64,8 @@ Route::group(['prefix' => 'guru', 'middleware' => ['auth', 'islogin:guru']], fun
     Route::get('/profil', [TeacherController::class, 'profil'])->name('profil-guru');
     Route::put('/profil/{id}', [TeacherController::class, 'update'])->name('update-profil-guru');
     Route::get('/tugas', [TeacherController::class, 'tugas'])->name('guru-data-tugas');
+    Route::get('/tugas/detail-tugas', [TeacherController::class, 'detail_tugas'])->name('guru-detail-tugas');
+    Route::get('/tugas/detail-tugas/siswa', [TeacherController::class, 'tugas_siswa'])->name('guru-detail-tugas-siswa');
     Route::get('/data-siswa', [TeacherController::class, 'data_siswa'])->name('guru-data-siswa');
 });
 

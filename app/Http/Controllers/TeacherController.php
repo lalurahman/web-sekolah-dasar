@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -148,7 +149,20 @@ class TeacherController extends Controller
 
     public function tugas()
     {
-        return view('pages.guru.tugas');
+        $mata_pelajaran = Lesson::get();
+        return view('pages.guru.tugas',[
+            'mata_pelajaran' => $mata_pelajaran
+        ]);
+    }
+
+    public function detail_tugas()
+    {
+        return view('pages.guru.detail-tugas');
+    }
+
+    public function tugas_siswa()
+    {
+        return view('pages.guru.tugas-siswa');
     }
 
     public function data_siswa()
