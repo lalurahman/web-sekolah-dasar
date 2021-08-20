@@ -107,11 +107,11 @@
                     @enderror
                 </div>
                 <div class="form-group col-12 col-md-6">
-                    <label for="classrooms_id">Wali Kelas</label>
-                    <select name="classrooms_id" id="classrooms_id" class="form-control">
+                    <label for="classroom_id">Wali Kelas</label>
+                    <select name="classroom_id" id="classroom_id" class="form-control">
                         <option value="">bukan wali kelas</option>
                         @foreach ($kelas as $kelas)
-                            <option value="{{ $kelas->id }}" @if ($kelas->id == $guru->classrooms_id) selected @endif>{{ $kelas->name }}</option>
+                            <option value="{{ $kelas->id }}" @if ($kelas->id == $guru->classroom_id) selected @endif>{{ $kelas->name }}</option>
                         @endforeach
                     </select>
                 </div>

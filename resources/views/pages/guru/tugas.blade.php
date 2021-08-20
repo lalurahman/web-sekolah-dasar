@@ -3,7 +3,7 @@
 @section('content')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Daftar Tugas {{ Auth::user()->kelas->name }}</h1>
+  <h1 class="h3 mb-0 text-gray-800">Daftar Tugas {{ Auth::user()->classroom->name }}</h1>
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#tambahTugasModal"><i class="fas fa-plus"></i> Buat Tugas Baru</button>
   
 </div>
@@ -11,105 +11,50 @@
 <!-- Content Row -->
 <div class="row">
   <!-- Earnings (Monthly) Card Example -->
-  <div class="col-12 col-md-3 mb-4">
-    <div class="card shadow h-100">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center mb-3">
-                <div class="col-12">
-                    {{-- <div class="mb-2 text-xs text-gray-800 ">Bahasa Indonesia</div> --}}
-                    <span class="badge badge-secondary mb-2 mt-0">Bahasa Indonesia</span>
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
-                        Tugas merangkum materi yang ada di halaman 2
-                    </div>
-                    <div class="text-gray text-xs">Batas Kumpul : 20/08/2021</div>
-                </div>
+  <div class="col-12">
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>     
+                <span>{{ $error }}</span>
             </div>
-            <div class="row">
-              <div class="col-12 text-center">
-                <a href="{{ route('guru-detail-tugas') }}" class="btn btn-block btn-sm btn-primary">
-                  <i class="fas fa-eye"></i>
-                  <span class="text ml-1">Lihat Detail Tugas</span>
-                </a>
-              </div>
-            </div>
+        @endforeach
+    @endif
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button> 
+            <span>{{ $message }}</span>
         </div>
-    </div>
+    @endif
   </div>
 
-  <div class="col-12 col-md-3 mb-4">
-    <div class="card shadow h-100">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center mb-3">
-                <div class="col-12">
-                    {{-- <div class="mb-2 text-xs text-gray-800 ">Bahasa Indonesia</div> --}}
-                    <span class="badge badge-secondary mb-2 mt-0">Bahasa Indonesia</span>
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
-                        Tugas merangkum materi yang ada di halaman 2
-                    </div>
-                    <div class="text-gray text-xs">Batas Kumpul : 20/08/2021</div>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-center">
-                <a href="#" class="btn btn-block btn-sm btn-primary">
-                  <i class="fas fa-eye"></i>
-                  <span class="text ml-1">Lihat Detail Tugas</span>
-                </a>
+  @foreach ($tugas as $tugas)
+  
+    <div class="col-12 col-md-3 mb-4">
+      <div class="card shadow h-100">
+          <div class="card-body">
+              <div class="row no-gutters align-items-center mb-3">
+                  <div class="col-12">
+                      {{-- <div class="mb-2 text-xs text-gray-800 ">Bahasa Indonesia</div> --}}
+                      <span class="badge badge-secondary mb-2 mt-0">{{ $tugas->lesson->name }}</span>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
+                          {{ $tugas->title }}
+                      </div>
+                      <div class="text-gray text-xs">Batas Kumpul : {{ date('d-m-Y', strtotime($tugas->due_date)) }}</div>
+                  </div>
               </div>
-            </div>
-        </div>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-3 mb-4">
-    <div class="card shadow h-100">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center mb-3">
-                <div class="col-12">
-                    {{-- <div class="mb-2 text-xs text-gray-800 ">Bahasa Indonesia</div> --}}
-                    <span class="badge badge-secondary mb-2 mt-0">Bahasa Indonesia</span>
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
-                        Tugas merangkum materi yang ada di halaman 2
-                    </div>
-                    <div class="text-gray text-xs">Batas Kumpul : 20/08/2021</div>
+              <div class="row">
+                <div class="col-12 text-center">
+                  <a href="{{ route('guru-detail-tugas', $tugas->id) }}" class="btn btn-block btn-sm btn-primary">
+                    <i class="fas fa-eye"></i>
+                    <span class="text ml-1">Lihat Detail Tugas</span>
+                  </a>
                 </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-center">
-                <a href="#" class="btn btn-block btn-sm btn-primary">
-                  <i class="fas fa-eye"></i>
-                  <span class="text ml-1">Lihat Detail Tugas</span>
-                </a>
               </div>
-            </div>
-        </div>
+          </div>
+      </div>
     </div>
-  </div>
-
-  <div class="col-12 col-md-3 mb-4">
-    <div class="card shadow h-100">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center mb-3">
-                <div class="col-12">
-                    {{-- <div class="mb-2 text-xs text-gray-800 ">Bahasa Indonesia</div> --}}
-                    <span class="badge badge-secondary mb-2 mt-0">Bahasa Indonesia</span>
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
-                        Tugas merangkum materi yang ada di halaman 2
-                    </div>
-                    <div class="text-gray text-xs">Batas Kumpul : 20/08/2021</div>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-center">
-                <a href="#" class="btn btn-block btn-sm btn-primary">
-                  <i class="fas fa-eye"></i>
-                  <span class="text ml-1">Lihat Detail Tugas</span>
-                </a>
-              </div>
-            </div>
-        </div>
-    </div>
-  </div>
+  @endforeach
 
 
 </div>
@@ -125,18 +70,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="" method="post" enctype="multipart/form-data">
+      <form action="{{ route('guru-tambah-tugas') }}" method="post" enctype="multipart/form-data">
           @csrf
           <div class="modal-body">
               <div class="row">
                   <div class="form-group col-12">
-                      <label for="lessons_id">Mata Pelajaran</label>
-                      <select name="leesons_id" id="lessons_id" class="form-control">
+                      <label for="lesson_id">Mata Pelajaran</label>
+                      <select name="lesson_id" id="lesson_id" class="form-control">
                         @foreach ($mata_pelajaran as $pelajaran)
                             <option value="{{ $pelajaran->id }}">{{ $pelajaran->name }}</option>
                         @endforeach
                       </select>
-                      @error('lessons_id')
+                      @error('lesson_id')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
                           </span>
@@ -144,7 +89,7 @@
                   </div>
                   <div class="form-group col-12">
                       <label for="title">Judul Tugas</label>
-                      <input type="text" name="title" id="title" class="form-control">
+                      <input type="text" name="title" id="title" class="form-control" required>
                       @error('title')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -152,9 +97,9 @@
                       @enderror
                   </div>
                   <div class="form-group col-12">
-                    <label for="detail_task">Detail Tugas</label>
-                    <input type="text" name="detail_task" id="detail_task" class="form-control">
-                    @error('detail_task')
+                    <label for="detail">Detail Tugas</label>
+                    <input type="text" name="detail" id="detail" class="form-control">
+                    @error('detail')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -162,7 +107,7 @@
                   </div>
                   <div class="form-group col-12">
                     <label for="due_date">Batas Waktu Kumpul</label>
-                    <input type="date" name="due_date" id="due_date" class="form-control">
+                    <input type="date" name="due_date" id="due_date" class="form-control" required>
                     @error('due_date')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

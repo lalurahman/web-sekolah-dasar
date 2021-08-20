@@ -32,7 +32,7 @@ class User extends Authenticatable
         'agama',
         'roles',
         'is_active',
-        'classrooms_id'
+        'classroom_id'
     ];
 
     /**
@@ -54,8 +54,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function kelas()
+    public function classroom()
     {
-        return $this->belongsTo(Classroom::class, 'classrooms_id', 'id');
+        return $this->belongsTo(Classroom::class);
     }
 }

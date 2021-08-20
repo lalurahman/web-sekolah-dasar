@@ -45,10 +45,10 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->nisn }}</td>
-                                <td>@if ($item->classrooms_id == NULL)
+                                <td>@if ($item->classroom_id == NULL)
                                     <span class="badge badge-secondary">belum ada kelas</span>
                                 @else
-                                    {{ $item->kelas->name }}
+                                    {{ $item->classroom->name }}
                                 @endif</td>
                                 <td>
                                     <a href="{{ route('admin-edit-siswa', $item->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>

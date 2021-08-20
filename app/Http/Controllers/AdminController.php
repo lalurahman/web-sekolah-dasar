@@ -30,7 +30,7 @@ class AdminController extends Controller
 
     public function guru()
     {
-        $guru = User::with('kelas')->where('roles','guru')->get();
+        $guru = User::with('classroom')->where('roles','guru')->get();
         $kelas = Classroom::get();
         return view('pages.admin.data-guru',[
             'guru' => $guru,

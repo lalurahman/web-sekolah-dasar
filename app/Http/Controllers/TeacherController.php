@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\Lesson;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,19 +151,51 @@ class TeacherController extends Controller
     public function tugas()
     {
         $mata_pelajaran = Lesson::get();
+        $tugas = Task::with('lesson')->orderBy('created_at','desc')->where('classroom_id', Auth::user()->classroom_id)->get();
         return view('pages.guru.tugas',[
+            'mata_pelajaran' => $mata_pelajaran,
+            'tugas' => $tugas
+        ]);
+    }
+
+    public function tambah_tugas(Request $request)
+    {
+        $this->validate($request, [
+            'lesson_id' => 'required',
+            'title' => 'required',
+            'due_date' => 'required'
+        ]);
+
+        Task::create([
+            'lesson_id' => $request->lesson_id,
+            'classroom_id' => Auth::user()->classroom->id,
+            'title' => $request->title,
+            'detail' => $request->detail,
+            'due_date' => $request->due_date
+        ]);
+
+        return redirect()->route('guru-data-tugas')->with('success','Tugas baru telah ditambahkan');
+    }
+
+    public function detail_tugas($id)
+    {
+        $tugas = Task::findOrFail($id);
+        $mata_pelajaran = Lesson::get();
+        return view('pages.guru.detail-tugas', [
+            'tugas' => $tugas,
             'mata_pelajaran' => $mata_pelajaran
         ]);
     }
 
-    public function detail_tugas()
+    public function update_tugas(Request $request, $id)
     {
-        return view('pages.guru.detail-tugas');
-    }
-
-    public function tugas_siswa()
-    {
-        return view('pages.guru.tugas-siswa');
+        $this->validate($request, [
+            'title' => 'required'
+        ]);
+        $data = $request->all();
+        $item = Task::findOrFail($id);
+        $item->update($data);
+        return redirect()->back();
     }
 
     public function data_siswa()

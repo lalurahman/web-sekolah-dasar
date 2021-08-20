@@ -64,7 +64,9 @@ Route::group(['prefix' => 'guru', 'middleware' => ['auth', 'islogin:guru']], fun
     Route::get('/profil', [TeacherController::class, 'profil'])->name('profil-guru');
     Route::put('/profil/{id}', [TeacherController::class, 'update'])->name('update-profil-guru');
     Route::get('/tugas', [TeacherController::class, 'tugas'])->name('guru-data-tugas');
-    Route::get('/tugas/detail-tugas', [TeacherController::class, 'detail_tugas'])->name('guru-detail-tugas');
+    Route::post('/tugas/tambah-tugas', [TeacherController::class, 'tambah_tugas'])->name('guru-tambah-tugas');
+    Route::get('/tugas/detail-tugas/{id}', [TeacherController::class, 'detail_tugas'])->name('guru-detail-tugas');
+    Route::put('/tugas/update-tugas/{id}', [TeacherController::class, 'update_tugas'])->name('guru-update-tugas');
     Route::get('/tugas/detail-tugas/siswa', [TeacherController::class, 'tugas_siswa'])->name('guru-detail-tugas-siswa');
     Route::get('/data-siswa', [TeacherController::class, 'data_siswa'])->name('guru-data-siswa');
 });
@@ -76,7 +78,7 @@ Route::group(['prefix' => 'staff', 'middleware' => ['auth', 'islogin:staff']], f
 Route::group(['prefix' => 'siswa', 'middleware' => ['auth', 'islogin:siswa']], function(){
     Route::get('/', [StudentController::class, 'index'])->name('dashboard-siswa');
     Route::get('/tugas', [StudentController::class, 'tugas'])->name('siswa-data-tugas');
-    Route::get('/tugas/detail-tugas', [StudentController::class, 'detail_tugas'])->name('siswa-detail-tugas');
+    Route::get('/tugas/detail-tugas/{id}', [StudentController::class, 'detail_tugas'])->name('siswa-detail-tugas');
 
 });
 

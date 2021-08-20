@@ -9,5 +9,5 @@ class DetailTaskGallery extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['detail_tasks_id','photos'];
+    protected $fillable = ['detail_task_id','photo'];
 }

@@ -45,10 +45,10 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->nip }}</td>
-                                <td>@if ($item->classrooms_id == NULL)
+                                <td>@if ($item->classroom_id == NULL)
                                     <span class="badge badge-secondary">bukan wali kelas</span>
                                 @else
-                                {{ $item->kelas->name }}
+                                {{ $item->classroom->name }}
                                 @endif</td>
                                 <td>
                                     <a href="{{ route('admin-edit-guru', $item->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
@@ -141,15 +141,7 @@
                             <option value="0">Perempuan</option>
                         </select>
                     </div>
-                    {{-- <div class="form-group col-12 col-md-6">
-                        <label for="classrooms_id">Wali Kelas</label>
-                        <select name="classrooms_id" id="classrooms_id" class="form-control">
-                            @foreach ($kelas as $kelas)
-                                
-                                <option value="{{ $kelas->id }}">{{ $kelas->name }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
+                    
                 </div>
             </div>
             <div class="modal-footer">

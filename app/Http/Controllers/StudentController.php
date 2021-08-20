@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -47,6 +49,9 @@ class StudentController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'gender' => $request->gender,
+            'phone' => $request->phone,
+            'address' => $request->address,
             'roles' => 'siswa'
         ]);
 
@@ -115,11 +120,17 @@ class StudentController extends Controller
 
     public function tugas()
     {
-        return view('pages.siswa.tugas');
+        $tugas = Task::with('lesson')->orderBy('created_at','desc')->where('classroom_id', Auth::user()->classroom_id)->get();
+        return view('pages.siswa.tugas',[
+            'tugas' => $tugas
+        ]);
     }
 
-    public function detail_tugas()
+    public function detail_tugas($id)
     {
-        return view('pages.siswa.detail-tugas');
+        $tugas = Task::findOrFail($id);
+        return view('pages.siswa.detail-tugas',[
+            'tugas' => $tugas
+        ]);
     }
 }

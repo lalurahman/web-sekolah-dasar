@@ -15,8 +15,8 @@ class CreateDetailTasksTable extends Migration
     {
         Schema::create('detail_tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('tasks_id');
-            $table->integer('users_id');
+            $table->integer('task_id');
+            $table->integer('user_id');
             $table->integer('status_periksa')->default(0);
             $table->integer('nilai');
             $table->timestamps();

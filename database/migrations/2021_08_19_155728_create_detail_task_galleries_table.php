@@ -15,8 +15,8 @@ class CreateDetailTaskGalleriesTable extends Migration
     {
         Schema::create('detail_task_galleries', function (Blueprint $table) {
             $table->id();
-            $table->integer('detail_tasks_id');
-            $table->string('photos');
+            $table->integer('detail_task_id');
+            $table->string('photo');
             $table->timestamps();
         });
     }

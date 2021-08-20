@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('status_kepegawaian')->nullable();
             $table->integer('is_active')->default(0);
             $table->integer('is_wali_kelas')->default(0);
-            $table->integer('classrooms_id')->nullable();
+            $table->integer('classroom_id')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

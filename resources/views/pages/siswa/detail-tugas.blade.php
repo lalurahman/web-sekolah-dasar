@@ -17,14 +17,16 @@
             <div class="row no-gutters align-items-center mb-3">
                 <div class="col-12">
                     {{-- <div class="mb-2">Mata Pelajaran : Bahasa Indonesia</div> --}}
-                    <span class="badge badge-secondary mb-2 mt-0 py-1 px-2">Bahasa Indonesia</span>
+                    <span class="badge badge-secondary mb-2 mt-0 py-1 px-2">{{ $tugas->lesson->name }}</span>
                     <div class="font-weight-bold text-uppercase mb-2">
-                        Tugas merangkum materi yang ada di halaman 2
+                        {{ $tugas->title }}
                     </div>
-                    <div class=" mb-2">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus architecto deserunt nobis, neque officiis vitae explicabo beatae qui impedit voluptatum illum quos magni nihil ad incidunt repellendus praesentium sequi iure eveniet mollitia veritatis tenetur, consectetur nisi ex! Nisi consectetur reprehenderit fuga! Perspiciatis, ipsam nostrum? Illo explicabo quibusdam magnam facilis aut.
-                    </div>
-                    <div class="text-gray">Batas Kumpul : 20/08/2021</div>
+                    @if ($tugas->detail)
+                      <div class=" mb-2">
+                          {{ $tugas->detail }}
+                      </div>
+                    @endif
+                    <div class="text-gray">Batas Kumpul : {{ date('d-m-Y', strtotime($tugas->due_date)) }}</div>
                 </div>
             </div>
             <div class="row">
@@ -45,10 +47,10 @@
           <div class="card-body py-4">
             <div class="row mb-3 text-uppercase">
                 <div class="col-12 col-md-4">
-                    <h6>Nama Lengkap : Lalu Abdurrahman</h6>
+                    <h6>Nama Lengkap : {{ Auth::user()->name }}</h6>
                 </div>
                 <div class="col-12 col-md-4">
-                    <h6>NISN : 09807897</h6>
+                    <h6>NISN : {{ Auth::user()->nisn }}</h6>
                 </div>
                 <div class="col-12 col-md-2">
                     <h6>Nilai : -</h6>

@@ -10,8 +10,8 @@ class DetailTask extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tasks_id',
-        'users_id',
+        'task_id',
+        'user_id',
         'status_periksa',
         'nilai'
     ];

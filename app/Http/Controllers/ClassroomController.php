@@ -16,7 +16,7 @@ class ClassroomController extends Controller
     public function index()
     {
         $kelas = Classroom::get();
-        $guru = User::with('kelas')->get();
+        $guru = User::with('classroom')->get();
         return view('pages.admin.data-kelas',[
             'kelas' => $kelas,
             'guru' => $guru
@@ -49,7 +49,7 @@ class ClassroomController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->back()->with('success', 'Mata Pelajaran Berhasil ditambah');
+        return redirect()->back()->with('success', 'Kelas Berhasil ditambah');
     }
 
     /**
