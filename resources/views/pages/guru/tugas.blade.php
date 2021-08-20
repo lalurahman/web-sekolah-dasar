@@ -98,7 +98,7 @@
                   </div>
                   <div class="form-group col-12">
                     <label for="detail">Detail Tugas</label>
-                    <input type="text" name="detail" id="detail" class="form-control">
+                    <textarea name="detail" id="detail" rows="5" class="form-control"></textarea>
                     @error('detail')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -124,4 +124,16 @@
     </div>
   </div>
 </div>
+@endpush
+
+@push('addon-script')
+    <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+    {{-- <script>
+    function thisFileUpload() {
+        document.getElementById("file").click();
+    }
+    </script> --}}
+    {{-- <script>
+      CKEDITOR.replace("detail");
+    </script> --}}
 @endpush

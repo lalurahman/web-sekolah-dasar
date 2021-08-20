@@ -24,8 +24,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/login', [AuthUserController::class, 'login'])->name('login');
 Route::post('/login', [AuthUserController::class, 'login_process'])->name('login-process');
-Route::get('/login-admin', [AuthUserController::class, 'login_admin'])->name('login-admin');
-Route::post('/login-admin', [AuthUserController::class, 'login_admin_process'])->name('login-admin-process');
 Route::get('/register', [AuthUserController::class, 'register'])->name('register');
 Route::post('/register', [StudentController::class, 'store'])->name('register-student');
 Route::get('/logout', [AuthUserController::class, 'logout'])->name('logout');
@@ -67,7 +65,8 @@ Route::group(['prefix' => 'guru', 'middleware' => ['auth', 'islogin:guru']], fun
     Route::post('/tugas/tambah-tugas', [TeacherController::class, 'tambah_tugas'])->name('guru-tambah-tugas');
     Route::get('/tugas/detail-tugas/{id}', [TeacherController::class, 'detail_tugas'])->name('guru-detail-tugas');
     Route::put('/tugas/update-tugas/{id}', [TeacherController::class, 'update_tugas'])->name('guru-update-tugas');
-    Route::get('/tugas/detail-tugas/siswa', [TeacherController::class, 'tugas_siswa'])->name('guru-detail-tugas-siswa');
+    Route::get('/tugas/detail-tugas/siswa/{id}', [TeacherController::class, 'tugas_siswa'])->name('guru-detail-tugas-siswa');
+    Route::put('/tugas/detail-tugas/beri-nilai/{id}', [TeacherController::class, 'beri_nilai'])->name('guru-beri-nilai-tugas-siswa');
     Route::get('/data-siswa', [TeacherController::class, 'data_siswa'])->name('guru-data-siswa');
 });
 
@@ -79,6 +78,8 @@ Route::group(['prefix' => 'siswa', 'middleware' => ['auth', 'islogin:siswa']], f
     Route::get('/', [StudentController::class, 'index'])->name('dashboard-siswa');
     Route::get('/tugas', [StudentController::class, 'tugas'])->name('siswa-data-tugas');
     Route::get('/tugas/detail-tugas/{id}', [StudentController::class, 'detail_tugas'])->name('siswa-detail-tugas');
+    Route::post('/tugas/kerjakan-tugas',[StudentController::class, 'kerjakan_tugas'])->name('siswa-kerjakan-tugas');
+    Route::post('/tugas/kirim-tugas',[StudentController::class, 'kirim_tugas'])->name('siswa-upload-tugas');
 
 });
 

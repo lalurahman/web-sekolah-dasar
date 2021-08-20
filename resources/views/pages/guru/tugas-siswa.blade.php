@@ -16,12 +16,12 @@
         <!-- Card Header - Accordion -->
         <a href="#detailTugas" class="d-block bg-success card-header py-3" data-toggle="collapse"
             role="button" aria-expanded="true" aria-controls="detailTugas">
-            <h6 class="m-0 font-weight-bold text-white text-uppercase">Tugas merangkum materi yang ada di halaman 2</h6>
+            <h6 class="m-0 font-weight-bold text-white text-uppercase">{{ $detail_tugas_siswa->task->title }}</h6>
         </a>
         <!-- Card Content - Collapse -->
         <div class="collapse show" id="detailTugas">
             <div class="card-body">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus architecto deserunt nobis, neque officiis vitae explicabo beatae qui impedit voluptatum illum quos magni nihil ad incidunt repellendus praesentium sequi iure eveniet mollitia veritatis tenetur, consectetur nisi ex! Nisi consectetur reprehenderit fuga! Perspiciatis, ipsam nostrum? Illo explicabo quibusdam magnam facilis aut.
+                {{ $detail_tugas_siswa->task->detail }}
             </div>
         </div>
     </div>
@@ -30,20 +30,37 @@
 </div>
 <div class="row">
     <div class="col-12">
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>     
+                    <span>{{ $error }}</span>
+                </div>
+            @endforeach
+        @endif
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button> 
+                <span>{{ $message }}</span>
+            </div>
+        @endif
+    </div>
+    <div class="col-12">
         <div class="card shadow">
             <div class="card-body py-4">
                 <div class="row mb-3 text-uppercase">
                     <div class="col-12 col-md-4">
-                        <h6>Nama Lengkap : Lalu Abdurrahman</h6>
+                        <h6>Nama Lengkap : {{ $detail_tugas_siswa->user->name }}</h6>
                     </div>
                     <div class="col-12 col-md-4">
-                        <h6>NISN : 09807897</h6>
+                        <h6>NISN : {{ $detail_tugas_siswa->user->nisn }}</h6>
                     </div>
                     <div class="col-12 col-md-2">
-                        <h6>Nilai : -</h6>
+                        <h6>Nilai : {{ $detail_tugas_siswa->nilai }}</h6>
                     </div>
+                    
                     <div class="col-12 col-md-2">
-                        <button class="btn btn-sm btn-primary">Beri Nilai</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#beriNilaiModal">Beri Nilai</button>
                     </div>
                 </div>
                 <div class="row">
@@ -61,62 +78,34 @@
 @endsection
 
 @push('addon-script')
-<div class="modal fade" id="editTugasModal" tabindex="-1" aria-labelledby="editTugasModalLabel" aria-hidden="true">
+<div class="modal fade" id="beriNilaiModal" tabindex="-1" aria-labelledby="beriNilaiModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editTugasModalLabel">Tambah Tugas Baru</h5>
+        <h5 class="modal-title" id="beriNilaiModalLabel">Beri Nilai Tugas</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="" method="post" enctype="multipart/form-data">
+      <form action="{{ route('guru-beri-nilai-tugas-siswa', $detail_tugas_siswa->id) }}" method="post" enctype="multipart/form-data">
+        @method('PUT')
           @csrf
           <div class="modal-body">
               <div class="row">
                   <div class="form-group col-12">
-                      <label for="lessons_id">Mata Pelajaran</label>
-                      <select name="leesons_id" id="lessons_id" class="form-control">
-                        
-                      </select>
-                      @error('lessons_id')
+                      <label for="nilai">Masukkan Nilai (1-100)</label>
+                      <input type="number" name="nilai" id="nilai" class="form-control" value="{{ $detail_tugas_siswa->nilai }}" required>
+                      @error('nilai')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
                           </span>
                       @enderror
-                  </div>
-                  <div class="form-group col-12">
-                      <label for="title">Judul Tugas</label>
-                      <input type="text" name="title" id="title" class="form-control">
-                      @error('title')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="detail_task">Detail Tugas</label>
-                    <input type="text" name="detail_task" id="detail_task" class="form-control">
-                    @error('detail_task')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="due_date">Batas Waktu Kumpul</label>
-                    <input type="date" name="due_date" id="due_date" class="form-control">
-                    @error('due_date')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                   </div>
               </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-primary">Simpan Tugas</button>
+            <button type="submit" class="btn btn-primary">Beri Nilai</button>
           </div>
       </form>
     </div>

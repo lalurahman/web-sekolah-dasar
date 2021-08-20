@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\DetailTask;
+use App\Models\DetailTaskGallery;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -129,8 +131,56 @@ class StudentController extends Controller
     public function detail_tugas($id)
     {
         $tugas = Task::findOrFail($id);
+        $detail_tugas = DetailTask::where('task_id', $tugas->id)->first();
+        // $gallery_tugas = DetailTaskGallery::with('detail_task')->where('detail_task_id', $detail_tugas->id)->get();
+        // dd($detail_tugas);
+        // $tugas_siswa = DetailTaskGallery::with('detail_task')->where('detail_task_id', $tugas->id)->get();
         return view('pages.siswa.detail-tugas',[
-            'tugas' => $tugas
+            'tugas' => $tugas,
+            'detail_tugas' => $detail_tugas,
+            // 'tugas_siswa' => $tugas_siswa
         ]);
+    }
+
+    public function kerjakan_tugas(Request $request)
+    {
+        DetailTask::create([
+            'task_id' => $request->task_id,
+            'user_id' => Auth::user()->id,
+            'nilai' => 0
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function kirim_tugas(Request $request)
+    {
+        $this->validate($request,[
+            'photo' => 'image|max:2048',
+        ],[
+            'photo.max' => 'Gambar produk tidak boleh lebih dari 2 MB'
+        ]);
+        
+        $data = $request->all();
+        
+        $detail_tugas = DetailTask::create([
+            'task_id' => $request->task_id,
+            'user_id' => Auth::user()->id,
+            'nilai' => 0
+        ]);
+
+        
+        if($request->hasFile('photo')){
+            $photo = $request->file('photo');
+            $nama_file = time() . "_" . $photo->getClientOriginalName();
+
+            $storage = 'tugas-siswa';
+            $photo->move($storage, $nama_file);
+            $data['photo'] = $nama_file;
+        } 
+        $data['detail_task_id'] = $detail_tugas->id;
+        DetailTaskGallery::create($data);
+
+        return redirect()->back()->with('success','Tugas Berhasil Dikirim');
     }
 }

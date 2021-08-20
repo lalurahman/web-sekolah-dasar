@@ -10,4 +10,9 @@ class DetailTaskGallery extends Model
     use HasFactory;
 
     protected $fillable = ['detail_task_id','photo'];
+
+    public function detail_task()
+    {
+        return $this->belongsTo(DetailTask::class);
+    }
 }

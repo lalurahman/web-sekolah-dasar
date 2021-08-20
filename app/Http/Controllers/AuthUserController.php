@@ -16,15 +16,6 @@ class AuthUserController extends Controller
         return view('auth.login');
     }
 
-    public function login_admin()
-    {
-        if (Auth::check()) {
-            return redirect()->back();
-        }
-
-        return view('auth.login-admin');
-    }
-
     public function login_process(Request $request)
     {
         $this->validate($request, [

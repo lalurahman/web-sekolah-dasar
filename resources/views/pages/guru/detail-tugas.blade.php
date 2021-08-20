@@ -60,20 +60,21 @@
                             @php
                                 $no = 1;
                             @endphp
-                            
+                            @foreach ($tugas_siswa as $item)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>sfs</td>
-                                    <td>aadsf</td>
+                                    <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
+                                    <td>{{ $item->user->name }}</td>
                                     <td><span class="badge badge-danger">belum diperiksa</span></td>
                                     
                                     <td>
-                                        <a href="{{ route('guru-detail-tugas-siswa') }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Periksa</a>
+                                        <a href="{{ route('guru-detail-tugas-siswa', $item->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Periksa</a>
                                         
                                     </td>
                                 </tr>
+                            @endforeach
                             
-                                <tr>
+                                {{-- <tr>
                                     <td>{{ $no++ }}</td>
                                     <td>sfs</td>
                                     <td>aadsf</td>
@@ -83,7 +84,7 @@
                                         <a href="{{ route('guru-detail-tugas-siswa') }}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> Lihat Tugas</a>
                                         
                                     </td>
-                                </tr>
+                                </tr> --}}
                             
                         </tbody>
                     </table>
@@ -133,7 +134,7 @@
                   </div>
                   <div class="form-group col-12">
                     <label for="detail">Detail Tugas</label>
-                    <input type="text" name="detail" id="detail" class="form-control" value="{{ $tugas->detail }}">
+                    <textarea name="detail" id="detail" rows="5" class="form-control">{!! $tugas->detail !!}</textarea>
                     @error('detail')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

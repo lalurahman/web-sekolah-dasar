@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\DetailTask;
 use App\Models\Lesson;
 use App\Models\Task;
 use App\Models\User;
@@ -162,7 +163,8 @@ class TeacherController extends Controller
     {
         $this->validate($request, [
             'lesson_id' => 'required',
-            'title' => 'required',
+            'title' => 'required|string',
+            'detail' => 'string',
             'due_date' => 'required'
         ]);
 
@@ -181,19 +183,38 @@ class TeacherController extends Controller
     {
         $tugas = Task::findOrFail($id);
         $mata_pelajaran = Lesson::get();
+        $tugas_siswa = DetailTask::with(['task','user'])->where('task_id', $tugas->id)->get();
         return view('pages.guru.detail-tugas', [
             'tugas' => $tugas,
-            'mata_pelajaran' => $mata_pelajaran
+            'mata_pelajaran' => $mata_pelajaran,
+            'tugas_siswa' => $tugas_siswa
         ]);
     }
 
     public function update_tugas(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required'
+            'title' => 'required|string',
+            'detail' => 'string'
         ]);
         $data = $request->all();
         $item = Task::findOrFail($id);
+        $item->update($data);
+        return redirect()->back();
+    }
+
+    public function tugas_siswa($id)
+    {
+        $detail_tugas_siswa = DetailTask::with('task')->find($id);
+        return view('pages.guru.tugas-siswa',[
+            'detail_tugas_siswa' => $detail_tugas_siswa
+        ]);
+    }
+
+    public function beri_nilai(Request $request, $id)
+    {
+        $data = $request->all();
+        $item = DetailTask::findOrFail($id);
         $item->update($data);
         return redirect()->back();
     }

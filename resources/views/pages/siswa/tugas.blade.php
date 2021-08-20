@@ -24,17 +24,11 @@
                         </div>
                         <div class="text-gray text-xs">Batas Kumpul : {{ date('d-m-Y', strtotime($tugas->due_date)) }}</div>
                     </div>
-                    {{-- <div class="col-2 d-block">
-                      <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
-                      <a href="#" class="btn btn-sm btn-info mt-1"><i class="fas fa-edit"></i></a>
-                      <a href="#" class="btn btn-sm btn-danger mt-1"><i class="fas fa-trash"></i></a>
-                    </div> --}}
                 </div>
                 <div class="row">
                   <div class="col-12 text-center">
                     <a href="{{ route('siswa-detail-tugas', $tugas->id) }}" class="btn btn-block btn-sm btn-primary">
-                      <i class="fas fa-edit"></i>
-                      <span class="text ml-1">Kerjakan Tugas</span>
+                      <span class="text ml-1">Lihat Tugas</span>
                     </a>
                   </div>
                 </div>
