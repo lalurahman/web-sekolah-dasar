@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\DetailTask;
+use App\Models\DetailTaskGallery;
 use App\Models\Lesson;
 use App\Models\Task;
 use App\Models\User;
@@ -205,7 +206,8 @@ class TeacherController extends Controller
 
     public function tugas_siswa($id)
     {
-        $detail_tugas_siswa = DetailTask::with('task')->find($id);
+        $detail_tugas_siswa = DetailTask::with(['task','detail_task_gallery'])->find($id);
+        
         return view('pages.guru.tugas-siswa',[
             'detail_tugas_siswa' => $detail_tugas_siswa
         ]);
@@ -215,6 +217,7 @@ class TeacherController extends Controller
     {
         $data = $request->all();
         $item = DetailTask::findOrFail($id);
+        $data['status_periksa'] = 1;
         $item->update($data);
         return redirect()->back();
     }

@@ -79,7 +79,11 @@
                 <div class="form-group col-12 col-md-6">
                     <label for="gender">Jenis Kelamin</label>
                     <select name="gender" id="gender" class="form-control">
-                        @if ($siswa->gender == 1)
+                        @if ($siswa->gender == NULL)
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="1">Laki Laki</option>
+                            <option value="0">Perempuan</option>
+                        @elseif($siswa->gender == 1)
                             <option value="1" selected>Laki Laki</option>
                             <option value="0">Perempuan</option>
                         @else

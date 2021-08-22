@@ -65,11 +65,20 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
                                     <td>{{ $item->user->name }}</td>
-                                    <td><span class="badge badge-danger">belum diperiksa</span></td>
+                                    <td>
+                                        @if ($item->status_periksa == 1)
+                                            <span class="badge badge-success">sudah diperiksa</span>
+                                        @else
+                                            <span class="badge badge-danger">belum diperiksa</span>
+                                        @endif
+                                    </td>
                                     
                                     <td>
-                                        <a href="{{ route('guru-detail-tugas-siswa', $item->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Periksa</a>
-                                        
+                                        @if ($item->status_periksa == 1)
+                                            <a href="{{ route('guru-detail-tugas-siswa', $item->id) }}" class="btn btn-sm btn-info px-2"><i class="fas fa-eye mr-1"></i> Lihat</a>
+                                        @else
+                                            <a href="{{ route('guru-detail-tugas-siswa', $item->id) }}" class="btn btn-sm btn-primary px-2"><i class="fas fa-edit mr-1"></i> Periksa</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

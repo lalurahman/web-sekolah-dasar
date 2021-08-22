@@ -18,7 +18,7 @@ class DetailTask extends Model
 
     public function task()
     {
-        return $this->belongsTo(Task::class, 'task_id','id');
+        return $this->belongsTo(Task::class);
     }
 
     public function user()
@@ -28,6 +28,6 @@ class DetailTask extends Model
 
     public function detail_task_gallery()
     {
-        return $this->belongsTo(DetailTaskGallery::class);
+        return $this->hasMany(DetailTaskGallery::class);
     }
 }

@@ -29,19 +29,7 @@
                     <div class="text-gray">Batas Kumpul : {{ date('d-m-Y', strtotime($tugas->due_date)) }}</div>
                 </div>
             </div>
-            <div class="row d-none">
-              <div class="col-12">
-                <form action="{{ route('siswa-upload-tugas') }}" method="POST" enctype="multipart/form-data">
-                  @csrf
-                  <input type="hidden" name="task_id" value="{{ $tugas->id }}">
-                  <input type="file" id="file" class="d-none" name="photo" onchange="form.submit()">
-                  <button type="button" class="btn btn-sm btn-primary">
-                    <i class="fas fa-edit"></i>
-                    <span class="text ml-1 px-2" onclick="thisFileUpload()">Kumpul Tugas</span>
-                  </button>
-                </form>
-              </div>
-            </div>
+            
             {{-- kerjakan tugas --}}
             @if (!$detail_tugas)
               <div class="row">
@@ -55,6 +43,20 @@
                   </form>
                 </div>
               </div>
+            @else 
+            <div class="row">
+              <div class="col-12">
+                <form action="{{ route('siswa-upload-tugas') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="detail_task_id" value="{{ $detail_tugas->id }}">
+                  <input type="file" id="file" class="d-none" name="photo" onchange="form.submit()">
+                  <button type="button" class="btn btn-sm btn-primary">
+                    <i class="fas fa-edit"></i>
+                    <span class="text ml-1 px-2" onclick="thisFileUpload()">Kumpul Tugas</span>
+                  </button>
+                </form>
+              </div>
+            </div>
             @endif
         </div>
     </div>
@@ -90,19 +92,20 @@
                   </div>
                   <div class="col-12 col-md-2">
                       <h6>Nilai : {{ $detail_tugas->nilai }}</h6>
+                      {{-- <h6>{{ $detail_tugas->id }}</h6> --}}
                   </div>    
               </div>
               <div class="row">
-                {{-- @forelse ($tugas_siswa as $tugas_siswa)
-                  <div class="col-12 col-md-6">
-                    <img src="{{ asset('tugas-siswa/' . $tugas_siswa->photo) }}" alt="foto tugas" class="w-100 img-thumbnail">
+                @forelse ($detail_tugas->detail_task_gallery as $tugas_siswa)
+                  <div class="col-12 col-md-6 mb-3">
+                    <img src="{{ asset('tugas-siswa/'.$tugas_siswa->photo) }}" alt="foto tugas" class="w-100 img-thumbnail">
                   </div>
                 @empty
                   <div class="col-12">
                     <div class="alert alert-success text-center">Tugas Belum Dikumpul</div>
                   </div>
-                @endforelse --}}
-                  
+                @endforelse
+                
               </div>
             </div>
           </div>

@@ -123,22 +123,24 @@ class StudentController extends Controller
     public function tugas()
     {
         $tugas = Task::with('lesson')->orderBy('created_at','desc')->where('classroom_id', Auth::user()->classroom_id)->get();
+        $detail_tugas = DetailTask::with(['task','user'])->first();
         return view('pages.siswa.tugas',[
-            'tugas' => $tugas
+            'tugas' => $tugas,
+            'detail_tugas' => $detail_tugas
         ]);
     }
 
     public function detail_tugas($id)
     {
         $tugas = Task::findOrFail($id);
-        $detail_tugas = DetailTask::where('task_id', $tugas->id)->first();
+        
+        $detail_tugas = DetailTask::with(['task','detail_task_gallery','user'])->where('task_id', $id)->where('user_id', Auth::user()->id)->first();
+        
         // $gallery_tugas = DetailTaskGallery::with('detail_task')->where('detail_task_id', $detail_tugas->id)->get();
-        // dd($detail_tugas);
-        // $tugas_siswa = DetailTaskGallery::with('detail_task')->where('detail_task_id', $tugas->id)->get();
         return view('pages.siswa.detail-tugas',[
             'tugas' => $tugas,
             'detail_tugas' => $detail_tugas,
-            // 'tugas_siswa' => $tugas_siswa
+            // 'gallery_tugas' => $gallery_tugas
         ]);
     }
 
@@ -157,19 +159,12 @@ class StudentController extends Controller
     {
         $this->validate($request,[
             'photo' => 'image|max:2048',
+            'detail_task_id' => 'required'
         ],[
             'photo.max' => 'Gambar produk tidak boleh lebih dari 2 MB'
         ]);
         
         $data = $request->all();
-        
-        $detail_tugas = DetailTask::create([
-            'task_id' => $request->task_id,
-            'user_id' => Auth::user()->id,
-            'nilai' => 0
-        ]);
-
-        
         if($request->hasFile('photo')){
             $photo = $request->file('photo');
             $nama_file = time() . "_" . $photo->getClientOriginalName();
@@ -177,9 +172,9 @@ class StudentController extends Controller
             $storage = 'tugas-siswa';
             $photo->move($storage, $nama_file);
             $data['photo'] = $nama_file;
+            $data['detail_task_id'] = $request->detail_task_id;
+            DetailTaskGallery::create($data);
         } 
-        $data['detail_task_id'] = $detail_tugas->id;
-        DetailTaskGallery::create($data);
 
         return redirect()->back()->with('success','Tugas Berhasil Dikirim');
     }

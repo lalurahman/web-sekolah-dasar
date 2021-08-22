@@ -64,12 +64,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-6">
-                        <img src="/assets/img/portfolio/portfolio-6.jpg" alt="foto tugas" class="w-100 img-thumbnail">
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <img src="/assets/img/portfolio/portfolio-5.jpg" alt="foto tugas" class="w-100 img-thumbnail">
-                    </div>
+                    @forelse ($detail_tugas_siswa->detail_task_gallery as $gallery)
+                        <div class="col-12 col-md-6">
+                            <img src="{{ asset('tugas-siswa/'.$gallery->photo) }}" alt="foto tugas" class="w-100 img-thumbnail">
+                        </div>
+                    @empty
+                        <div>belum ada tugas</div>
+                    @endforelse
+                    
                 </div>
             </div>
         </div>
